@@ -6,6 +6,7 @@ defmodule NetguruAssignment.Authors.Author do
     field :age, :integer
     field :first_name, :string
     field :last_name, :string
+    has_many :articles, NetguruAssignment.Articles.Article
 
     timestamps()
   end

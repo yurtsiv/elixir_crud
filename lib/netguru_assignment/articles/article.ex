@@ -7,6 +7,7 @@ defmodule NetguruAssignment.Articles.Article do
     field :description, :string
     field :published_date, :naive_datetime
     field :title, :string
+    belongs_to :author, NetguruAssignment.Authors.Author
 
     timestamps()
   end
@@ -14,9 +15,9 @@ defmodule NetguruAssignment.Articles.Article do
   @doc false
   def changeset(article, attrs) do
     article
-    |> cast(attrs, [:title, :description, :body])
+    |> cast(attrs, [:title, :description, :body, :author])
     |> put_change(:published_date, NaiveDateTime.utc_now |> NaiveDateTime.truncate(:second))
-    |> validate_required([:title, :description, :body, :published_date])
+    |> validate_required([:title, :description, :body, :author, :published_date])
     |> validate_length(:title, max: 150)
   end
 end
