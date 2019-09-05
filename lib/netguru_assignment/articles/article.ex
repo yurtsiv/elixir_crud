@@ -18,7 +18,7 @@ defmodule NetguruAssignment.Articles.Article do
     |> cast(attrs, [:title, :description, :body, :author_id])
     |> put_change(:published_date, NaiveDateTime.utc_now |> NaiveDateTime.truncate(:second))
     |> assoc_constraint(:author)
-    |> validate_required([:title, :description, :body, :author_id, :published_date])
+    |> validate_required([:title, :body, :author_id, :published_date])
     |> validate_length(:title, max: 150)
   end
 end
