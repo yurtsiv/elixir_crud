@@ -5,10 +5,20 @@ defmodule NetguruAssignmentWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug NetguruAssignment.Auth.Pipeline
+  end
+
+  scope "/api/protected", NetguruAssignmentWeb do
+    pipe_through [:api, :auth]
+
+    resources "/authors", AuthorController, except: [:new, :edit, :create]
+    resources "/articles", ArticleController, except: [:new, :edit]
+  end
+
   scope "/api", NetguruAssignmentWeb do
     pipe_through :api
 
-    resources "/authors", AuthorController, except: [:new, :edit]
-    resources "/articles", ArticleController, except: [:new, :edit]
+    post "/author", AuthorController, :create
   end
 end

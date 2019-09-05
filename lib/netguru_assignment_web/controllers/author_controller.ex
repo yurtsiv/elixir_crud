@@ -3,6 +3,7 @@ defmodule NetguruAssignmentWeb.AuthorController do
 
   alias NetguruAssignment.Authors
   alias NetguruAssignment.Authors.Author
+  alias NetguruAssignment.Auth
 
   action_fallback NetguruAssignmentWeb.FallbackController
 
@@ -14,10 +15,9 @@ defmodule NetguruAssignmentWeb.AuthorController do
   def create(conn, %{"author" => author_params}) do
     IO.puts "hoolllla"
     with {:ok, %Author{} = author} <- Authors.create_author(author_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.author_path(conn, :show, author))
-      |> render("show.json", author: author)
+      {:ok, token, claims} = Auth.Guardian.encode_and_sign(author)
+      render(conn, "author_created.json", %{author: author, token: token})
+      json(conn, %{token: token})
     end
   end
 

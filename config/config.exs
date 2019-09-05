@@ -7,6 +7,10 @@
 # General application configuration
 use Mix.Config
 
+config :netguru_assignment, NetguruAssignment.Auth.Guardian,
+  issuer: "netguru_assignment",
+  secret_key: "KTAO3hvYqWdas3iKmD740Na3KfsDnnheeJbjUBEuI1zJibr0QgwPypc+TK/PtnJX"
+
 config :netguru_assignment,
   ecto_repos: [NetguruAssignment.Repo]
 
