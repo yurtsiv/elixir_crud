@@ -37,6 +37,8 @@ defmodule NetguruAssignment.Authors do
   """
   def get_author!(id), do: Repo.get!(Author, id)
 
+  def get_author(id), do: Repo.get(Author, id)
+
   @doc """
   Creates a author.
 
