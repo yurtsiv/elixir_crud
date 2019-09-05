@@ -7,11 +7,6 @@ defmodule NetguruAssignmentWeb.AuthorController do
 
   action_fallback NetguruAssignmentWeb.FallbackController
 
-  def index(conn, _params) do
-    authors = Authors.list_authors()
-    render(conn, "index.json", authors: authors)
-  end
-
   def create(conn, %{"author" => author_params}) do
     IO.puts "hoolllla"
     with {:ok, %Author{} = author} <- Authors.create_author(author_params) do
