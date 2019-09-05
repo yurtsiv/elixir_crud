@@ -14,7 +14,9 @@ defmodule NetguruAssignment.Articles.Article do
   @doc false
   def changeset(article, attrs) do
     article
-    |> cast(attrs, [:title, :description, :body, :published_date])
+    |> cast(attrs, [:title, :description, :body])
+    |> put_change(:published_date, NaiveDateTime.utc_now |> NaiveDateTime.truncate(:second))
     |> validate_required([:title, :description, :body, :published_date])
+    |> validate_length(:title, max: 150)
   end
 end
