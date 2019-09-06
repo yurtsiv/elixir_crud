@@ -12,7 +12,6 @@ defmodule NetguruAssignmentWeb.AuthorController do
     with {:ok, %Author{} = author} <- Authors.create_author(author_params) do
       {:ok, token, _claims} = Auth.Guardian.encode_and_sign(author)
       render(conn, "author_created.json", %{author: author, token: token})
-      json(conn, %{token: token})
     end
   end
 
@@ -31,6 +30,7 @@ defmodule NetguruAssignmentWeb.AuthorController do
 
   defp authorize_author(conn, _) do
     {given_id, _} = Integer.parse(conn.params["id"])
+
     if given_id == conn.assigns.author.id do
       conn
     else
