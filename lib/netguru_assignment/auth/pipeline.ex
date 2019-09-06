@@ -6,4 +6,11 @@ defmodule NetguruAssignment.Auth.Pipeline do
   plug Guardian.Plug.VerifyHeader, realm: "Bearer"
   plug Guardian.Plug.EnsureAuthenticated
   plug Guardian.Plug.LoadResource
+  plug :put_author
+
+  def put_author(conn, _attrs) do
+    author = Guardian.Plug.current_resource(conn)
+    conn
+    |> assign(:author, author)
+  end
 end

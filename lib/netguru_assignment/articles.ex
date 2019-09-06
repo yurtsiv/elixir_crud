@@ -49,8 +49,9 @@ defmodule NetguruAssignment.Articles do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_article(attrs \\ %{}) do
-    %Article{}
+  def create_article(author, attrs \\ %{}) do
+    author
+    |> Ecto.build_assoc(:articles)
     |> Article.changeset(attrs)
     |> Repo.insert()
   end
@@ -100,5 +101,9 @@ defmodule NetguruAssignment.Articles do
   """
   def change_article(%Article{} = article) do
     Article.changeset(article, %{})
+  end
+
+  def preload_author(article) do
+    author = Repo.preload(article, :author)
   end
 end

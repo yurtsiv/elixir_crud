@@ -15,6 +15,13 @@ defmodule NetguruAssignmentWeb.ArticleView do
       title: article.title,
       description: article.description,
       body: article.body,
-      published_date: article.published_date}
+      published_date: article.published_date,
+      author: %{
+        id: article.author.id,
+        first_name: article.author.first_name,
+        last_name: article.author.last_name,
+        age: article.author.age
+      }
+    }
   end
 end
