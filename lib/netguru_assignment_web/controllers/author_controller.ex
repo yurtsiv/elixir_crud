@@ -8,9 +8,8 @@ defmodule NetguruAssignmentWeb.AuthorController do
   action_fallback NetguruAssignmentWeb.FallbackController
 
   def create(conn, %{"author" => author_params}) do
-    IO.puts "hoolllla"
     with {:ok, %Author{} = author} <- Authors.create_author(author_params) do
-      {:ok, token, claims} = Auth.Guardian.encode_and_sign(author)
+      {:ok, token, _claims} = Auth.Guardian.encode_and_sign(author)
       render(conn, "author_created.json", %{author: author, token: token})
       json(conn, %{token: token})
     end
@@ -26,14 +25,6 @@ defmodule NetguruAssignmentWeb.AuthorController do
 
     with {:ok, %Author{} = author} <- Authors.update_author(author, author_params) do
       render(conn, "show.json", author: author)
-    end
-  end
-
-  def delete(conn, %{"id" => id}) do
-    author = Authors.get_author!(id)
-
-    with {:ok, %Author{}} <- Authors.delete_author(author) do
-      send_resp(conn, :no_content, "")
     end
   end
 end

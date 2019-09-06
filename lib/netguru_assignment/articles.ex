@@ -57,24 +57,6 @@ defmodule NetguruAssignment.Articles do
   end
 
   @doc """
-  Updates a article.
-
-  ## Examples
-
-      iex> update_article(article, %{field: new_value})
-      {:ok, %Article{}}
-
-      iex> update_article(article, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_article(%Article{} = article, attrs) do
-    article
-    |> Article.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
   Deletes a Article.
 
   ## Examples
@@ -104,6 +86,6 @@ defmodule NetguruAssignment.Articles do
   end
 
   def preload_author(article) do
-    author = Repo.preload(article, :author)
+    Repo.preload(article, :author)
   end
 end

@@ -9,19 +9,6 @@ defmodule NetguruAssignment.Authors do
   alias NetguruAssignment.Authors.Author
 
   @doc """
-  Returns the list of authors.
-
-  ## Examples
-
-      iex> list_authors()
-      [%Author{}, ...]
-
-  """
-  def list_authors do
-    Repo.all(Author)
-  end
-
-  @doc """
   Gets a single author.
 
   Raises `Ecto.NoResultsError` if the Author does not exist.
@@ -73,22 +60,6 @@ defmodule NetguruAssignment.Authors do
     author
     |> Author.changeset(attrs)
     |> Repo.update()
-  end
-
-  @doc """
-  Deletes a Author.
-
-  ## Examples
-
-      iex> delete_author(author)
-      {:ok, %Author{}}
-
-      iex> delete_author(author)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_author(%Author{} = author) do
-    Repo.delete(author)
   end
 
   @doc """

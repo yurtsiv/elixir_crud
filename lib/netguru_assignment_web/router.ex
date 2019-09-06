@@ -12,8 +12,8 @@ defmodule NetguruAssignmentWeb.Router do
   scope "/api/protected", NetguruAssignmentWeb do
     pipe_through [:api, :auth]
 
-    resources "/authors", AuthorController, only: [:show, :update, :delete]
-    resources "/articles", ArticleController, except: [:new, :edit]
+    resources "/authors", AuthorController, only: [:show, :update]
+    resources "/articles", ArticleController, only: [:index, :create, :delete]
   end
 
   scope "/api", NetguruAssignmentWeb do
