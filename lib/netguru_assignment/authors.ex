@@ -76,6 +76,9 @@ defmodule NetguruAssignment.Authors do
     Author.changeset(author, attrs)
   end
 
+  @doc """
+  Returns an authentiaction token for a given author
+  """
   def get_auth_token(author) do
     Auth.Guardian.encode_and_sign(author)
   end
