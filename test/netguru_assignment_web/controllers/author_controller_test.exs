@@ -2,7 +2,6 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
   use NetguruAssignmentWeb.ConnCase
 
   alias NetguruAssignment.Authors
-  alias NetguruAssignment.Authors.Author
 
   @create_attrs %{
     age: 42,
@@ -21,6 +20,7 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
   end
 
   describe "create author" do
+
     test "renders author and token when data is valid", %{conn: conn} do
       conn = post(conn, Routes.author_path(conn, :create), author: @create_attrs)
 
@@ -28,7 +28,7 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
       author_id = resp_data["author"]["id"]
 
       assert %{
-               "id" => author_id,
+               "id" => ^author_id,
                "age" => 42,
                "first_name" => "some first_name",
                "last_name" => "some last_name"
@@ -44,11 +44,20 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
   end
 
   describe "update author" do
-    test "renders author when data is valid", %{conn: conn, author: %Author{id: id} = author} do
-      conn = put(conn, Routes.author_path(conn, :update, author), author: @update_attrs)
-      assert %{"id" => ^id} = json_response(conn, 200)["data"]
+    test "returns Unauthorized when since no token", %{conn: conn} do
+      {author, _token} = create_author()
 
-      conn = get(conn, Routes.author_path(conn, :show, id))
+      conn = put(conn, Routes.author_path(conn, :update, author), author: @update_attrs)
+      assert conn.status == 401
+    end
+
+    test "renders author when data is valid", %{conn: conn} do
+      {author, token} = create_author()
+      conn = conn
+        |> authenticate_author(token)
+        |> put(Routes.author_path(conn, :update, author), author: @update_attrs)
+
+      assert %{"id" => id} = json_response(conn, 200)["data"]
 
       assert %{
                "id" => id,
@@ -58,13 +67,41 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
              } = json_response(conn, 200)["data"]
     end
 
-    test "renders errors when data is invalid", %{conn: conn, author: author} do
-      conn = put(conn, Routes.author_path(conn, :update, author), author: @invalid_attrs)
+    test "renders errors when data is invalid", %{conn: conn} do
+      {author, token} = create_author()
+      conn = conn
+        |> authenticate_author(token)
+        |> put(Routes.author_path(conn, :update, author), author: @invalid_attrs)
+
       assert json_response(conn, 422)["errors"] != %{}
     end
   end
 
-  defp create_author(conn) do
-    conn
+  describe "show author" do
+    test "returns Unauthorized when since no token", %{conn: conn} do
+      {author, _token} = create_author()
+
+      conn = get(conn, Routes.author_path(conn, :show, author), %{"id" => author.id})
+      assert conn.status == 401
+    end
+
+    test "renders author", %{conn: conn} do
+      {author, token} = create_author()
+      conn = conn
+      |> authenticate_author(token)
+      |> get(Routes.author_path(conn, :show, author), %{"id" => author.id})
+
+      assert author = json_response(conn, 200)["data"]
+    end
+  end
+
+  defp create_author() do
+    {:ok, author} = Authors.create_author(@create_attrs)
+    {:ok, token, _claims} = Authors.get_auth_token(author)
+    {author, token}
+  end
+
+  defp authenticate_author(conn, token) do
+    conn |> put_req_header("authorization", "Bearer #{token}")
   end
 end

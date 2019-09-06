@@ -3,14 +3,13 @@ defmodule NetguruAssignmentWeb.AuthorController do
 
   alias NetguruAssignment.Authors
   alias NetguruAssignment.Authors.Author
-  alias NetguruAssignment.Auth
 
   action_fallback NetguruAssignmentWeb.FallbackController
   plug :authorize_author when action in [:update]
 
   def create(conn, %{"author" => author_params}) do
     with {:ok, %Author{} = author} <- Authors.create_author(author_params) do
-      {:ok, token, _claims} = Auth.Guardian.encode_and_sign(author)
+      {:ok, token, _claims} = Authors.get_auth_token(author)
       render(conn, "author_created.json", %{author: author, token: token})
     end
   end

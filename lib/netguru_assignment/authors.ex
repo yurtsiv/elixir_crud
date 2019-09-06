@@ -7,6 +7,7 @@ defmodule NetguruAssignment.Authors do
   alias NetguruAssignment.Repo
 
   alias NetguruAssignment.Authors.Author
+  alias NetguruAssignment.Auth
 
   @doc """
   Gets a single author.
@@ -73,5 +74,9 @@ defmodule NetguruAssignment.Authors do
   """
   def change_author(%Author{} = author) do
     Author.changeset(author, %{})
+  end
+
+  def get_auth_token(author) do
+    Auth.Guardian.encode_and_sign(author)
   end
 end
