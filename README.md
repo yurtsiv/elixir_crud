@@ -28,6 +28,7 @@
   {
     "data": {
       "author": {
+        "id": integer,
         "first_name": string,
         "last_name": string,
         "age": integer
@@ -50,6 +51,7 @@
   ```
   {
     "data": {
+      "id": integer,
       "first_name": string,
       "last_name": string,
       "age": integer
@@ -83,6 +85,7 @@
   ```
   {
     "data": {
+      "id": integer,
       "first_name": string,
       "last_name": string,
       "age": integer
