@@ -43,11 +43,23 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
   end
 
   describe "update author" do
-    test "returns Unauthorized when no token", %{conn: conn} do
+    test "returns Unauthorized status when no token", %{conn: conn} do
       {author, _token} = create_author()
 
       conn = put(conn, Routes.author_path(conn, :update, author), author: @update_attrs)
       assert conn.status == 401
+    end
+
+    test "returns Unathorized status when author tries to update details of another author", %{conn: conn} do
+      {_author1, token1} = create_author()
+      {author2, _token2} = create_author()
+
+      conn =
+        conn
+        |> sign_in_author(token1)
+        |> put(Routes.author_path(conn, :update, author2), author: @update_attrs)
+
+      assert response(conn, 401)
     end
 
     test "renders author when data is valid", %{conn: conn} do

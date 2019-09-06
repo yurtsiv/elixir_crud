@@ -4,6 +4,7 @@ defmodule NetguruAssignment.Auth.Guardian do
   use Guardian, otp_app: :netguru_assignment
 
   alias NetguruAssignment.Authors
+  alias NetguruAssignment.Authors.Author
 
   def subject_for_token(author, _claims) do
     sub = to_string(author.id)
@@ -14,7 +15,7 @@ defmodule NetguruAssignment.Auth.Guardian do
     id = claims["sub"]
 
     case Authors.get_author(id) do
-      author -> {:ok, author}
+      %Author{} = author -> {:ok, author}
       nil -> {:error}
     end
   end

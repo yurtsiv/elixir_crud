@@ -22,7 +22,7 @@ defmodule NetguruAssignmentWeb.ArticleControllerTest do
   end
 
   describe "index" do
-    test "returns Unauthorized when no token", %{conn: conn} do
+    test "returns Unauthorized status when no token", %{conn: conn} do
       conn = get(conn, Routes.article_path(conn, :index))
 
       assert response(conn, 401)
@@ -41,7 +41,7 @@ defmodule NetguruAssignmentWeb.ArticleControllerTest do
   end
 
   describe "create article" do
-    test "returns Unathorized when no token", %{conn: conn} do
+    test "returns Unathorized status when no token", %{conn: conn} do
       conn = post(conn, Routes.article_path(conn, :create), article: @create_attrs)
 
       assert response(conn, 401)
@@ -78,7 +78,7 @@ defmodule NetguruAssignmentWeb.ArticleControllerTest do
   end
 
   describe "delete article" do
-    test "returns Unathorized when no token", %{conn: conn} do
+    test "returns Unathorized staus when no token", %{conn: conn} do
       author = create_author()
       article = create_article(author)
       conn = delete(conn, Routes.article_path(conn, :delete, article))
@@ -86,7 +86,7 @@ defmodule NetguruAssignmentWeb.ArticleControllerTest do
       assert response(conn, 401)
     end
 
-    test "returns Unathorized when article does not belong to author", %{conn: conn} do
+    test "returns Unathorized status when article does not belong to author", %{conn: conn} do
       author1 = create_author()
       author2 = create_author()
       article = create_article(author1)
