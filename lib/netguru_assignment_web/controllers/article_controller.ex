@@ -36,7 +36,7 @@ defmodule NetguruAssignmentWeb.ArticleController do
       conn
     else
       conn
-      |> send_resp(:unathorzied, "Unathorized")
+      |> send_resp(:unauthorized, "Unathorized")
       |> halt()
     end
   end

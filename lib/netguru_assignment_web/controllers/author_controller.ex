@@ -6,6 +6,7 @@ defmodule NetguruAssignmentWeb.AuthorController do
   alias NetguruAssignment.Auth
 
   action_fallback NetguruAssignmentWeb.FallbackController
+  plug :authorize_author when action in [:update]
 
   def create(conn, %{"author" => author_params}) do
     with {:ok, %Author{} = author} <- Authors.create_author(author_params) do
@@ -25,6 +26,17 @@ defmodule NetguruAssignmentWeb.AuthorController do
 
     with {:ok, %Author{} = author} <- Authors.update_author(author, author_params) do
       render(conn, "show.json", author: author)
+    end
+  end
+
+  defp authorize_author(conn, _) do
+    {given_id, _} = Integer.parse(conn.params["id"])
+    if given_id == conn.assigns.author.id do
+      conn
+    else
+      conn
+      |> send_resp(:unauthorized, "Unathorized")
+      |> halt()
     end
   end
 end
