@@ -49,7 +49,7 @@ defmodule NetguruAssignment.Articles do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_article(author, attrs \\ %{}) do
+  def create_article(attrs \\ %{}, author) do
     author
     |> Ecto.build_assoc(:articles)
     |> Article.changeset(attrs)

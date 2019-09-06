@@ -13,8 +13,10 @@ defmodule NetguruAssignmentWeb.ArticleController do
   end
 
   def create(conn, %{"article" => article_params}) do
-    with {:ok, %Article{} = article} <- Articles.create_article(conn.assigns.author, article_params) do
+    with {:ok, %Article{} = article} <-
+           Articles.create_article(article_params, conn.assigns.author) do
       article_with_authour = Articles.preload_author(article)
+
       conn
       |> put_status(:created)
       |> render("show.json", article: article_with_authour)
