@@ -81,8 +81,8 @@ defmodule NetguruAssignment.Articles do
       %Ecto.Changeset{source: %Article{}}
 
   """
-  def change_article(%Article{} = article) do
-    Article.changeset(article, %{})
+  def change_article(%Article{} = article, attrs \\ %{}) do
+    Article.changeset(article, attrs)
   end
 
   def preload_author(article) do

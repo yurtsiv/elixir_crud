@@ -13,12 +13,8 @@ defmodule NetguruAssignment.ArticlesTest do
       description: "some description",
       title: "some title"
     }
-    @update_attrs %{
-      body: "some updated body",
-      description: "some updated description",
-      title: "some updated title"
-    }
-    @invalid_attrs %{body: nil, description: nil, published_date: nil, title: nil}
+    @invalid_attrs %{
+      body: nil, description: "Description", published_date: nil, title: nil}
 
     def author_fixture() do
       {:ok, author} =
@@ -50,7 +46,7 @@ defmodule NetguruAssignment.ArticlesTest do
       assert Articles.get_article!(article.id) == article
     end
 
-    test "create_article/1 with valid data creates a article" do
+    test "create_article/1 with valid data creates an article" do
       current_date = NaiveDateTime.utc_now()
       assert {:ok, %Article{} = article} = Articles.create_article(@valid_attrs, author_fixture())
 
@@ -74,9 +70,20 @@ defmodule NetguruAssignment.ArticlesTest do
       assert_raise Ecto.NoResultsError, fn -> Articles.get_article!(article.id) end
     end
 
-    test "change_article/1 returns a article changeset" do
+    test "change_article/1 returns an article changeset" do
       article = article_fixture()
       assert %Ecto.Changeset{} = Articles.change_article(article)
+    end
+
+    test "change_article/1 returns error changeset (required fields)" do
+      changeset = Articles.change_article(%Article{}, @invalid_attrs)
+      assert %{body: ["can't be blank"], title: ["can't be blank"]} = errors_on(changeset)
+    end
+
+    test "change_article/1 returns error changeset (description is too long)"  do
+      invalid_attrs = @valid_attrs |> Map.put(:title, String.duplicate("title", 150))
+      changeset = Articles.change_article(%Article{}, invalid_attrs)
+      assert %{title: ["should be at most 150 character(s)"]} = errors_on(changeset)
     end
   end
 end

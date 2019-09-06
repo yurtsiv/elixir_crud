@@ -2,7 +2,6 @@ defmodule NetguruAssignmentWeb.ArticleControllerTest do
   use NetguruAssignmentWeb.ConnCase
 
   alias NetguruAssignment.Articles
-  alias NetguruAssignment.Articles.Article
   alias NetguruAssignment.Authors
 
   @author_attrs %{
@@ -15,12 +14,6 @@ defmodule NetguruAssignmentWeb.ArticleControllerTest do
     description: "some description",
     published_date: ~N[2010-04-17 14:00:00],
     title: "some title"
-  }
-  @update_attrs %{
-    body: "some updated body",
-    description: "some updated description",
-    published_date: ~N[2011-05-18 15:01:01],
-    title: "some updated title"
   }
   @invalid_attrs %{body: nil, description: nil, published_date: nil, title: nil}
 
