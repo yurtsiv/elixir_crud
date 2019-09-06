@@ -68,5 +68,12 @@ defmodule NetguruAssignment.AuthorsTest do
       changeset = Authors.change_author(%Author{}, invalid_attrs)
       assert %{age: ["must be greater than or equal to 13"]} = errors_on(changeset)
     end
+
+    test "get_auth_token/1 returns auth token" do
+      author = author_fixture()
+      {:ok, token, _claims} = Authors.get_auth_token(author)
+
+      assert String.length(token) > 0
+    end
   end
 end
