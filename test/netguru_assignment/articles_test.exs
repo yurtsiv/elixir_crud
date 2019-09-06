@@ -32,7 +32,7 @@ defmodule NetguruAssignment.ArticlesTest do
         attrs
         |> Enum.into(@valid_attrs)
         |> Articles.create_article(author)
-
+      
       article
     end
 
@@ -84,6 +84,12 @@ defmodule NetguruAssignment.ArticlesTest do
       invalid_attrs = @valid_attrs |> Map.put(:title, String.duplicate("title", 150))
       changeset = Articles.change_article(%Article{}, invalid_attrs)
       assert %{title: ["should be at most 150 character(s)"]} = errors_on(changeset)
+    end
+
+    test "preload_author/1 loads author of a given article" do
+      article = article_fixture() |> Articles.preload_author()
+
+      assert article.author.age == @author_attrs.age
     end
   end
 end
