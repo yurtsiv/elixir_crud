@@ -11,7 +11,8 @@ defmodule NetguruAssignmentWeb.ArticleView do
   end
 
   def render("article.json", %{article: article}) do
-    %{id: article.id,
+    %{
+      id: article.id,
       title: article.title,
       description: article.description,
       body: article.body,

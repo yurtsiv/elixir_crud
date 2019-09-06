@@ -13,8 +13,7 @@ defmodule NetguruAssignment.ArticlesTest do
       description: "some description",
       title: "some title"
     }
-    @invalid_attrs %{
-      body: nil, description: "Description", published_date: nil, title: nil}
+    @invalid_attrs %{body: nil, description: "Description", published_date: nil, title: nil}
 
     def author_fixture() do
       {:ok, author} =
@@ -32,7 +31,7 @@ defmodule NetguruAssignment.ArticlesTest do
         attrs
         |> Enum.into(@valid_attrs)
         |> Articles.create_article(author)
-      
+
       article
     end
 
@@ -80,7 +79,7 @@ defmodule NetguruAssignment.ArticlesTest do
       assert %{body: ["can't be blank"], title: ["can't be blank"]} = errors_on(changeset)
     end
 
-    test "change_article/1 returns error changeset (description is too long)"  do
+    test "change_article/1 returns error changeset (description is too long)" do
       invalid_attrs = @valid_attrs |> Map.put(:title, String.duplicate("title", 150))
       changeset = Articles.change_article(%Article{}, invalid_attrs)
       assert %{title: ["should be at most 150 character(s)"]} = errors_on(changeset)

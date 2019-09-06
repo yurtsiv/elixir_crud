@@ -9,6 +9,5 @@ defmodule NetguruAssignment.Repo.Migrations.CreateAuthors do
 
       timestamps()
     end
-
   end
 end

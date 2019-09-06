@@ -7,16 +7,15 @@ defmodule NetguruAssignmentWeb.AuthorView do
   end
 
   def render("author_created.json", %{author: author, token: token}) do
-    %{data: %{
-      author: render_one(author, AuthorView, "author.json"),
-      token: token
-    }}
+    %{
+      data: %{
+        author: render_one(author, AuthorView, "author.json"),
+        token: token
+      }
+    }
   end
 
   def render("author.json", %{author: author}) do
-    %{id: author.id,
-      first_name: author.first_name,
-      last_name: author.last_name,
-      age: author.age}
+    %{id: author.id, first_name: author.first_name, last_name: author.last_name, age: author.age}
   end
 end

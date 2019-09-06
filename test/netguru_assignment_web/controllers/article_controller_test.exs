@@ -30,7 +30,9 @@ defmodule NetguruAssignmentWeb.ArticleControllerTest do
 
     test "lists all articles", %{conn: conn} do
       author = create_author()
-      conn = conn
+
+      conn =
+        conn
         |> sign_in_author(author)
         |> get(Routes.article_path(conn, :index))
 
@@ -47,9 +49,11 @@ defmodule NetguruAssignmentWeb.ArticleControllerTest do
 
     test "renders article when data is valid", %{conn: conn} do
       author = create_author()
-      conn = conn
-      |> sign_in_author(author)
-      |> post(Routes.article_path(conn, :create), article: @create_attrs)
+
+      conn =
+        conn
+        |> sign_in_author(author)
+        |> post(Routes.article_path(conn, :create), article: @create_attrs)
 
       assert %{"id" => id} = json_response(conn, 201)["data"]
 
@@ -63,7 +67,9 @@ defmodule NetguruAssignmentWeb.ArticleControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       author = create_author()
-      conn = conn
+
+      conn =
+        conn
         |> sign_in_author(author)
         |> post(Routes.article_path(conn, :create), article: @invalid_attrs)
 
@@ -82,13 +88,14 @@ defmodule NetguruAssignmentWeb.ArticleControllerTest do
 
     test "returns Unathorized when article does not belong to author", %{conn: conn} do
       author1 = create_author()
-      author2 = create_author() 
+      author2 = create_author()
       article = create_article(author1)
 
-      conn = conn
-        |> sign_in_author(author2) 
+      conn =
+        conn
+        |> sign_in_author(author2)
         |> delete(Routes.article_path(conn, :delete, article))
-      
+
       assert response(conn, 401)
     end
 
@@ -96,7 +103,8 @@ defmodule NetguruAssignmentWeb.ArticleControllerTest do
       author = create_author()
       article = create_article(author)
 
-      conn = conn
+      conn =
+        conn
         |> sign_in_author(author)
         |> delete(Routes.article_path(conn, :delete, article))
 

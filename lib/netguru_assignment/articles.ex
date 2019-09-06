@@ -85,6 +85,9 @@ defmodule NetguruAssignment.Articles do
     Article.changeset(article, attrs)
   end
 
+  @doc """
+    Returns an %Article{} with author loadaed
+  """
   def preload_author(article) do
     Repo.preload(article, :author)
   end

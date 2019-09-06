@@ -60,10 +60,15 @@ defmodule NetguruAssignment.AuthorsTest do
 
     test "change_author/1 returns error changeset (required fields)" do
       changeset = Authors.change_author(%Author{}, @invalid_attrs)
-      assert %{first_name: ["can't be blank"], last_name: ["can't be blank"], age: ["can't be blank"],} = errors_on(changeset)
+
+      assert %{
+               first_name: ["can't be blank"],
+               last_name: ["can't be blank"],
+               age: ["can't be blank"]
+             } = errors_on(changeset)
     end
 
-    test "change_author/1 returns error changeset (description is too long)"  do
+    test "change_author/1 returns error changeset (description is too long)" do
       invalid_attrs = @valid_attrs |> Map.put(:age, 12)
       changeset = Authors.change_author(%Author{}, invalid_attrs)
       assert %{age: ["must be greater than or equal to 13"]} = errors_on(changeset)

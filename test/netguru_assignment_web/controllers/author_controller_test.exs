@@ -52,7 +52,9 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
 
     test "renders author when data is valid", %{conn: conn} do
       {author, token} = create_author()
-      conn = conn
+
+      conn =
+        conn
         |> sign_in_author(token)
         |> put(Routes.author_path(conn, :update, author), author: @update_attrs)
 
@@ -68,7 +70,9 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       {author, token} = create_author()
-      conn = conn
+
+      conn =
+        conn
         |> sign_in_author(token)
         |> put(Routes.author_path(conn, :update, author), author: @invalid_attrs)
 
@@ -86,9 +90,11 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
 
     test "renders author", %{conn: conn} do
       {author, token} = create_author()
-      conn = conn
-      |> sign_in_author(token)
-      |> get(Routes.author_path(conn, :show, author), %{"id" => author.id})
+
+      conn =
+        conn
+        |> sign_in_author(token)
+        |> get(Routes.author_path(conn, :show, author), %{"id" => author.id})
 
       assert author = json_response(conn, 200)["data"]
     end

@@ -12,6 +12,7 @@ defmodule NetguruAssignment.Auth.Guardian do
 
   def resource_from_claims(claims) do
     id = claims["sub"]
+
     case Authors.get_author(id) do
       author -> {:ok, author}
       nil -> {:error}

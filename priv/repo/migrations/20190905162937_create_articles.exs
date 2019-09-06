@@ -10,6 +10,5 @@ defmodule NetguruAssignment.Repo.Migrations.CreateArticles do
 
       timestamps()
     end
-
   end
 end
