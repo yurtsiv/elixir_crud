@@ -72,8 +72,8 @@ defmodule NetguruAssignment.Authors do
       %Ecto.Changeset{source: %Author{}}
 
   """
-  def change_author(%Author{} = author) do
-    Author.changeset(author, %{})
+  def change_author(%Author{} = author, attrs \\ %{}) do
+    Author.changeset(author, attrs)
   end
 
   def get_auth_token(author) do

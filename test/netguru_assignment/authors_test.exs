@@ -28,7 +28,7 @@ defmodule NetguruAssignment.AuthorsTest do
       assert Authors.get_author!(author.id) == author
     end
 
-    test "create_author/1 with valid data creates a author" do
+    test "create_author/1 with valid data creates an author" do
       assert {:ok, %Author{} = author} = Authors.create_author(@valid_attrs)
       assert author.age == 42
       assert author.first_name == "some first_name"
@@ -53,9 +53,20 @@ defmodule NetguruAssignment.AuthorsTest do
       assert author == Authors.get_author!(author.id)
     end
 
-    test "change_author/1 returns a author changeset" do
+    test "change_author/1 returns an author changeset" do
       author = author_fixture()
       assert %Ecto.Changeset{} = Authors.change_author(author)
+    end
+
+    test "change_author/1 returns error changeset (required fields)" do
+      changeset = Authors.change_author(%Author{}, @invalid_attrs)
+      assert %{first_name: ["can't be blank"], last_name: ["can't be blank"], age: ["can't be blank"],} = errors_on(changeset)
+    end
+
+    test "change_author/1 returns error changeset (description is too long)"  do
+      invalid_attrs = @valid_attrs |> Map.put(:age, 12)
+      changeset = Authors.change_author(%Author{}, invalid_attrs)
+      assert %{age: ["must be greater than or equal to 13"]} = errors_on(changeset)
     end
   end
 end
