@@ -7,7 +7,11 @@ defmodule NetguruAssignment.AuthorsTest do
     alias NetguruAssignment.Authors.Author
 
     @valid_attrs %{age: 42, first_name: "some first_name", last_name: "some last_name"}
-    @update_attrs %{age: 43, first_name: "some updated first_name", last_name: "some updated last_name"}
+    @update_attrs %{
+      age: 43,
+      first_name: "some updated first_name",
+      last_name: "some updated last_name"
+    }
     @invalid_attrs %{age: nil, first_name: nil, last_name: nil}
 
     def author_fixture(attrs \\ %{}) do
@@ -17,11 +21,6 @@ defmodule NetguruAssignment.AuthorsTest do
         |> Authors.create_author()
 
       author
-    end
-
-    test "list_authors/0 returns all authors" do
-      author = author_fixture()
-      assert Authors.list_authors() == [author]
     end
 
     test "get_author!/1 returns the author with given id" do
@@ -52,12 +51,6 @@ defmodule NetguruAssignment.AuthorsTest do
       author = author_fixture()
       assert {:error, %Ecto.Changeset{}} = Authors.update_author(author, @invalid_attrs)
       assert author == Authors.get_author!(author.id)
-    end
-
-    test "delete_author/1 deletes the author" do
-      author = author_fixture()
-      assert {:ok, %Author{}} = Authors.delete_author(author)
-      assert_raise Ecto.NoResultsError, fn -> Authors.get_author!(author.id) end
     end
 
     test "change_author/1 returns a author changeset" do
