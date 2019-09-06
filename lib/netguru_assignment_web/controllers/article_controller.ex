@@ -5,6 +5,7 @@ defmodule NetguruAssignmentWeb.ArticleController do
   alias NetguruAssignment.Articles.Article
 
   action_fallback NetguruAssignmentWeb.FallbackController
+  plug :authorize_author when action in [:delete]
 
   def index(conn, _params) do
     articles = Articles.list_articles() |> Articles.preload_author()
@@ -25,6 +26,18 @@ defmodule NetguruAssignmentWeb.ArticleController do
 
     with {:ok, %Article{}} <- Articles.delete_article(article) do
       send_resp(conn, :no_content, "")
+    end
+  end
+
+  defp authorize_author(conn, _) do
+    article = Articles.get_article!(conn.params["id"])
+
+    if article.author_id == conn.assigns.author.id do
+      conn
+    else
+      conn
+      |> send_resp(:unathorzied, "Unathorized")
+      |> halt()
     end
   end
 end
