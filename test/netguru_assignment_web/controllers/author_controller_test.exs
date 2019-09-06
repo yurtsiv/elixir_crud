@@ -20,7 +20,6 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
   end
 
   describe "create author" do
-
     test "renders author and token when data is valid", %{conn: conn} do
       conn = post(conn, Routes.author_path(conn, :create), author: @create_attrs)
 
@@ -44,7 +43,7 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
   end
 
   describe "update author" do
-    test "returns Unauthorized when since no token", %{conn: conn} do
+    test "returns Unauthorized when no token", %{conn: conn} do
       {author, _token} = create_author()
 
       conn = put(conn, Routes.author_path(conn, :update, author), author: @update_attrs)
@@ -54,7 +53,7 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
     test "renders author when data is valid", %{conn: conn} do
       {author, token} = create_author()
       conn = conn
-        |> authenticate_author(token)
+        |> sign_in_author(token)
         |> put(Routes.author_path(conn, :update, author), author: @update_attrs)
 
       assert %{"id" => id} = json_response(conn, 200)["data"]
@@ -70,7 +69,7 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
     test "renders errors when data is invalid", %{conn: conn} do
       {author, token} = create_author()
       conn = conn
-        |> authenticate_author(token)
+        |> sign_in_author(token)
         |> put(Routes.author_path(conn, :update, author), author: @invalid_attrs)
 
       assert json_response(conn, 422)["errors"] != %{}
@@ -78,7 +77,7 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
   end
 
   describe "show author" do
-    test "returns Unauthorized when since no token", %{conn: conn} do
+    test "returns Unauthorized when no token", %{conn: conn} do
       {author, _token} = create_author()
 
       conn = get(conn, Routes.author_path(conn, :show, author), %{"id" => author.id})
@@ -88,7 +87,7 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
     test "renders author", %{conn: conn} do
       {author, token} = create_author()
       conn = conn
-      |> authenticate_author(token)
+      |> sign_in_author(token)
       |> get(Routes.author_path(conn, :show, author), %{"id" => author.id})
 
       assert author = json_response(conn, 200)["data"]
@@ -101,7 +100,7 @@ defmodule NetguruAssignmentWeb.AuthorControllerTest do
     {author, token}
   end
 
-  defp authenticate_author(conn, token) do
+  defp sign_in_author(conn, token) do
     conn |> put_req_header("authorization", "Bearer #{token}")
   end
 end

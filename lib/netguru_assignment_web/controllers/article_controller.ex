@@ -24,9 +24,8 @@ defmodule NetguruAssignmentWeb.ArticleController do
   end
 
   def delete(conn, %{"id" => id}) do
-    article = Articles.get_article!(id)
-
-    with {:ok, %Article{}} <- Articles.delete_article(article) do
+    with article <- Articles.get_article!(id),
+        {:ok, %Article{}} <- Articles.delete_article(article) do
       send_resp(conn, :no_content, "")
     end
   end
