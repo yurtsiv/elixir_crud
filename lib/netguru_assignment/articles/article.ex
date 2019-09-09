@@ -1,4 +1,8 @@
 defmodule NetguruAssignment.Articles.Article do
+  @moduledoc """
+  Defines schema and changeset for Article
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -12,7 +16,6 @@ defmodule NetguruAssignment.Articles.Article do
     timestamps()
   end
 
-  @doc false
   def changeset(article, attrs) do
     article
     |> cast(attrs, [:title, :description, :body])

@@ -1,4 +1,8 @@
 defmodule NetguruAssignment.Authors.Author do
+  @moduledoc """
+  Defines schema and changeset for Author
+  """
+
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -11,7 +15,6 @@ defmodule NetguruAssignment.Authors.Author do
     timestamps()
   end
 
-  @doc false
   def changeset(author, attrs) do
     author
     |> cast(attrs, [:first_name, :last_name, :age])

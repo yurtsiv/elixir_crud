@@ -1,4 +1,9 @@
 defmodule NetguruAssignment.Auth.Pipeline do
+  @moduledoc """
+  Defines an authentication pipeline and puts current
+  author to `conn` (availabe at `conn.assigns.author`) if authentication is successful
+  """
+
   use Guardian.Plug.Pipeline,
     otp_app: :netguru_assignment,
     module: NetguruAssignment.Auth.Guardian,

@@ -11,33 +11,13 @@ defmodule NetguruAssignment.Authors do
 
   @doc """
   Gets a single author.
-
-  Raises `Ecto.NoResultsError` if the Author does not exist.
-
-  ## Examples
-
-      iex> get_author!(123)
-      %Author{}
-
-      iex> get_author!(456)
-      ** (Ecto.NoResultsError)
-
   """
   def get_author!(id), do: Repo.get!(Author, id)
 
   def get_author(id), do: Repo.get(Author, id)
 
   @doc """
-  Creates a author.
-
-  ## Examples
-
-      iex> create_author(%{field: value})
-      {:ok, %Author{}}
-
-      iex> create_author(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
+  Creates an author.
   """
   def create_author(attrs \\ %{}) do
     %Author{}
@@ -46,16 +26,7 @@ defmodule NetguruAssignment.Authors do
   end
 
   @doc """
-  Updates a author.
-
-  ## Examples
-
-      iex> update_author(author, %{field: new_value})
-      {:ok, %Author{}}
-
-      iex> update_author(author, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
+  Updates an author.
   """
   def update_author(%Author{} = author, attrs) do
     author
@@ -65,19 +36,13 @@ defmodule NetguruAssignment.Authors do
 
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking author changes.
-
-  ## Examples
-
-      iex> change_author(author)
-      %Ecto.Changeset{source: %Author{}}
-
   """
   def change_author(%Author{} = author, attrs \\ %{}) do
     Author.changeset(author, attrs)
   end
 
   @doc """
-  Returns an authentiaction token for a given author
+  Returns an authentiaction token for a given Author
   """
   def get_auth_token(author) do
     Auth.Guardian.encode_and_sign(author)

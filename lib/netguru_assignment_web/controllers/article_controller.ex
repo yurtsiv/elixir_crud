@@ -1,4 +1,7 @@
 defmodule NetguruAssignmentWeb.ArticleController do
+  @moduledoc """
+  Handles Article create/read/delete
+  """
   use NetguruAssignmentWeb, :controller
 
   alias NetguruAssignment.Articles
@@ -37,7 +40,7 @@ defmodule NetguruAssignmentWeb.ArticleController do
       conn
     else
       conn
-      |> send_resp(:unauthorized, "Unathorized")
+      |> send_resp(:unauthorized, "Unauthorized")
       |> halt()
     end
   end

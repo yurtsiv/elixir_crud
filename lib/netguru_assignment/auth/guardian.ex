@@ -1,5 +1,7 @@
 defmodule NetguruAssignment.Auth.Guardian do
-  @moduledoc false
+  @moduledoc """
+  Cofigures Guardian
+  """
 
   use Guardian, otp_app: :netguru_assignment
 

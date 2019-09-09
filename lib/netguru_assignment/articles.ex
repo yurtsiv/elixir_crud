@@ -10,12 +10,6 @@ defmodule NetguruAssignment.Articles do
 
   @doc """
   Returns the list of articles.
-
-  ## Examples
-
-      iex> list_articles()
-      [%Article{}, ...]
-
   """
   def list_articles do
     Repo.all(Article)
@@ -25,29 +19,11 @@ defmodule NetguruAssignment.Articles do
   Gets a single article.
 
   Raises `Ecto.NoResultsError` if the Article does not exist.
-
-  ## Examples
-
-      iex> get_article!(123)
-      %Article{}
-
-      iex> get_article!(456)
-      ** (Ecto.NoResultsError)
-
   """
   def get_article!(id), do: Repo.get!(Article, id)
 
   @doc """
-  Creates a article.
-
-  ## Examples
-
-      iex> create_article(%{field: value})
-      {:ok, %Article{}}
-
-      iex> create_article(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
+  Creates an article.
   """
   def create_article(attrs \\ %{}, author) do
     author
@@ -57,16 +33,7 @@ defmodule NetguruAssignment.Articles do
   end
 
   @doc """
-  Deletes a Article.
-
-  ## Examples
-
-      iex> delete_article(article)
-      {:ok, %Article{}}
-
-      iex> delete_article(article)
-      {:error, %Ecto.Changeset{}}
-
+  Deletes an Article.
   """
   def delete_article(%Article{} = article) do
     Repo.delete(article)
@@ -74,19 +41,13 @@ defmodule NetguruAssignment.Articles do
 
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking article changes.
-
-  ## Examples
-
-      iex> change_article(article)
-      %Ecto.Changeset{source: %Article{}}
-
   """
   def change_article(%Article{} = article, attrs \\ %{}) do
     Article.changeset(article, attrs)
   end
 
   @doc """
-  Returns an %Article{} with author loadaed
+  Returns an Article with author loadaed
   """
   def preload_author(article) do
     Repo.preload(article, :author)
